@@ -1,4 +1,5 @@
 import React from 'react'
+import ProductsGrid from './ProductsGrid'
 
 const App = () => (
   <div>
@@ -10,9 +11,7 @@ const App = () => (
       <p>But first, a word from our sponsors:</p> <img className='ad' src={'/ads/?r=' + Math.floor(Math.random() * 1000)} />
     </header>
 
-    <section className='products'>
-      ... products go here ...
-    </section>
+    <ProductsGrid />
   </div>
 )
 
