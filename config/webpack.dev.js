@@ -1,11 +1,12 @@
 const LiveReloadPlugin = require('webpack-livereload-plugin')
 const path = require('path')
+const cssLoaders = require('./css-loaders')
 
 const config = {
   entry: './src/client/index.jsx',
   output: {
     path: path.resolve(__dirname, '../public'),
-    filename: 'bundle.js'
+    filename: 'js/bundle.js'
   },
   resolve: {
     extensions: ['.js', '.json', '.jsx', '*']
@@ -16,6 +17,10 @@ const config = {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         loader: 'babel-loader'
+      },
+      {
+        test: /\.scss$/,
+        use: cssLoaders.getAllLoaders(true)
       }
     ]
   },

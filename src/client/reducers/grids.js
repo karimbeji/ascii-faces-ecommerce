@@ -1,13 +1,33 @@
-import { initGrids, isValidGrid } from '../utils'
-import { ADD_ENTITY, REQUEST_ENTITIES, RECEIVE_ENTITIES } from '../actions'
+import * as gridsConstants from '../constants/grids'
+import { initObj, isValueInObj } from '../utils/object'
+import {
+  ADD_ENTITY, REQUEST_ENTITIES,
+  RECEIVE_ENTITIES, END_OF_ENTITIES,
+  MOVE_PRE_FETCHED
+} from '../actions'
 import { SORT_TYPE_ID } from '../constants'
+
+/**
+ * Checks whether is a valid grid.
+ * @param  {String}  grid Grid to be checked
+ * @return {Boolean}      If is a valid grid
+ */
+export const isValidGrid = grid => isValueInObj(gridsConstants, grid)
+
+/**
+ * Initialize the state of availables entities.
+ * @return {Object} The new initial state.
+ */
+export const initGrids = initial => initObj(gridsConstants, initial)
 
 // initial state of availables grids
 const initialGrids = initGrids({
   isFetching: false,
+  isEnd: false,
   lastPageLoaded: 0,
   sort: SORT_TYPE_ID,
-  items: []
+  items: [],
+  preFetched: []
 })
 
 /**
@@ -21,6 +41,8 @@ const grids = (state = initialGrids, action) => {
     case ADD_ENTITY:
     case REQUEST_ENTITIES:
     case RECEIVE_ENTITIES:
+    case END_OF_ENTITIES:
+    case MOVE_PRE_FETCHED:
       // checks whether payload has a grid to update and whether is a valid grid
       if (!action.hasOwnProperty('grid') || !isValidGrid(action.grid)) {
         return state
@@ -49,10 +71,10 @@ const processGrid = (state, action) => {
         return state
       }
 
-      // append new item without mutate the state
+      // append new item to preFetched without mutate the state
       return Object.assign({}, state, {
-        items: [
-          ...state.items,
+        preFetched: [
+          ...state.preFetched,
           action.item.id
         ]
       })
@@ -66,6 +88,21 @@ const processGrid = (state, action) => {
       return Object.assign({}, state, {
         isFetching: false,
         lastPageLoaded: action.lastPageLoaded
+      })
+    case END_OF_ENTITIES:
+      // tells that reachs the end without mutate the state
+      return Object.assign({}, state, {
+        isEnd: true
+      })
+    case MOVE_PRE_FETCHED:
+      // move all pre fetched to items and clear pre fetched without mutate the state
+      return Object.assign({}, state, {
+        items: [
+          ...state.items,
+          ...state.preFetched
+        ]
+      }, {
+        preFetched: []
       })
     default:
       return state

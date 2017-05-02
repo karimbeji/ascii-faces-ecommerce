@@ -1,11 +1,13 @@
 const webpack = require('webpack')
 const path = require('path')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const cssLoaders = require('./css-loaders')
 
 const config = {
   entry: './src/client/index.jsx',
   output: {
     path: path.resolve(__dirname, '../public'),
-    filename: 'bundle.js'
+    filename: 'js/bundle.js'
   },
   resolve: {
     extensions: ['.js', '.json', '.jsx', '*']
@@ -16,6 +18,13 @@ const config = {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         loader: 'babel-loader'
+      },
+      {
+        test: /\.scss$/,
+        use: ExtractTextPlugin.extract({
+          use: cssLoaders.getAllLoaders(false, false),
+          fallback: cssLoaders.getStyleLoader()
+        })
       }
     ]
   },
@@ -38,7 +47,8 @@ const config = {
         screw_ie8: true
       },
       comments: false
-    })
+    }),
+    new ExtractTextPlugin('css/styles.css')
   ],
   stats: 'none'
 }

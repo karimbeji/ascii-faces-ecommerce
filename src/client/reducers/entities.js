@@ -1,5 +1,19 @@
-import { initEntities, isValidEntity } from '../utils'
+import * as entitiesConstants from '../constants/entities'
+import { initObj, isValueInObj } from '../utils/object'
 import { ADD_ENTITY } from '../actions'
+
+/**
+ * Checks whether is a valid entity.
+ * @param  {String}  entity Entity to be checked
+ * @return {Boolean}        If is a valid entity
+ */
+const isValidEntity = entity => isValueInObj(entitiesConstants, entity)
+
+/**
+ * Initialize the state of availables entities.
+ * @return {Object} The new initial state.
+ */
+const initEntities = () => initObj(entitiesConstants)
 
 // initial state of availables entities
 const initialEntities = initEntities()
@@ -55,7 +69,7 @@ const processEntities = (state, action) => {
  * @param  {Object} action Action payload
  * @return {Object}        The new item
  */
-const newEntity = (action) => {
+const newEntity = action => {
   let item = {}
 
   /**
