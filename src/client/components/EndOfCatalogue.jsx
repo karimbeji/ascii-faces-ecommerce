@@ -8,14 +8,12 @@ import PropTypes from 'prop-types'
  * @return {ReactElement}                     The markup to render
  */
 const EndOfCatalogue = ({ isEnd, hasPreFetched }) => {
-  /**
-   * if grid reaches the end
-   * and do not has pre fetched entities
-   * define the className to show the component
-   */
+  // if grid reaches the end
+  // and do not has pre fetched entities
+  // define the className to show the component
   const className = (isEnd && !hasPreFetched) ? 'is-end' : ''
   return (
-    <div className={'end-of-catalogue mdl-typography--title-color-contrast ' + className}>
+    <div className={`end-of-catalogue mdl-typography--title-color-contrast ${className}`}>
       ~ end of catalogue ~
     </div>
   )

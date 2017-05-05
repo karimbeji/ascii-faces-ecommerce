@@ -2,12 +2,14 @@ import { combineReducers } from 'redux'
 import entities from './entities'
 import grids from './grids'
 import ads from './ads'
+import app from './app'
 
 // combine reducers to build the state
 const appReducer = combineReducers({
   entities,
   grids,
-  ads
+  ads,
+  app
 })
 
 export default appReducer
@@ -39,7 +41,17 @@ export default appReducer
  *     }
  *   },
  *   "ads": {
- *     "loaded": []
+ *     "loaded": [273]
+ *   },
+ *   "app": {
+ *     "visibleGrid": "products",
+ *     "shoppingCart": {
+ *       "products": {
+ *         "1040-4wl9hroz3f5zaxynteda8xgvi": {
+ *           quantity: 1
+ *         }
+ *       }
+ *     }
  *   }
  * }
  *

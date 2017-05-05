@@ -68,7 +68,7 @@ function webpackBuild () {
     }
 
     // if it is production you need to have dist files
-    if (!fs.existsSync('./public/bundle.js')) {
+    if (!fs.existsSync('./public/js/bundle.js') || !fs.existsSync('./public/css/styles.css')) {
       console.log()
       console.log('  ' + chalk.red('You do not have distribution files! Try to build prior to run.'))
       console.log()

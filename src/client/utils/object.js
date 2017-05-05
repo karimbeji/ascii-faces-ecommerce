@@ -1,8 +1,8 @@
 /**
  * Checks whether a given value exists as value of object properties.
- * @param  {Object} obj   Object to analyze properties' values
- * @param  {String} value Value to check
- * @return {Boolean}      If value exists as value of object properties
+ * @param  {Object}  obj   Object to analyze properties' values
+ * @param  {String}  value Value to check
+ * @return {Boolean}       If value exists as value of object properties
  */
 export const isValueInObj = (obj, value) => Object.keys(obj).every(key => value === obj[key])
 

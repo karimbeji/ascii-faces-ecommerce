@@ -2,21 +2,8 @@ import * as entitiesConstants from '../constants/entities'
 import { initObj, isValueInObj } from '../utils/object'
 import { ADD_ENTITY } from '../actions'
 
-/**
- * Checks whether is a valid entity.
- * @param  {String}  entity Entity to be checked
- * @return {Boolean}        If is a valid entity
- */
-const isValidEntity = entity => isValueInObj(entitiesConstants, entity)
-
-/**
- * Initialize the state of availables entities.
- * @return {Object} The new initial state.
- */
-const initEntities = () => initObj(entitiesConstants)
-
 // initial state of availables entities
-const initialEntities = initEntities()
+const initialEntities = initObj(entitiesConstants)
 
 /**
  * Reducer to change entities state.
@@ -28,7 +15,7 @@ const entities = (state = initialEntities, action) => {
   switch (action.type) {
     case ADD_ENTITY:
       // checks whether is a valid entity
-      if (!isValidEntity(action.entity)) {
+      if (!isValueInObj(entitiesConstants, action.entity)) {
         return state
       }
 
@@ -70,14 +57,13 @@ const processEntities = (state, action) => {
  * @return {Object}        The new item
  */
 const newEntity = action => {
+  // initialize the new item
   let item = {}
 
-  /**
-   * get all keys from the item payload
-   * and iterate over returned array
-   */
+  // get all keys from the item payload
+  // and iterate over returned array
   Object.keys(action.item).map(prop => {
-    // don't add id to the new item
+    // do not add id to the new item
     if (prop === 'id') {
       return
     }
@@ -86,6 +72,7 @@ const newEntity = action => {
     item[prop] = action.item[prop]
   })
 
+  // return the entity item
   return item
 }
 

@@ -7,6 +7,7 @@ import Ad from '../components/Ad'
 
 /**
  * AdContainer that handles ad.
+ * @extends React.Component
  */
 class AdContainer extends Component {
   /**
@@ -21,6 +22,8 @@ class AdContainer extends Component {
 
     // try to get a random ad that isn't already loaded
     do {
+      // even with this random the user **will see** a same advertisement in a row
+      // * more information on https://github.com/tembra/ascii-faces-ecommerce#ads-bug-identified
       randomAd = Math.floor(Math.random() * 1000)
     } while (ads.loaded.indexOf(randomAd) !== -1)
 
@@ -42,7 +45,8 @@ class AdContainer extends Component {
 
 // typechecking the props for AdContainer container
 AdContainer.propTypes = {
-  ads: PropTypes.object.isRequired
+  ads: PropTypes.object.isRequired,
+  dispatch: PropTypes.func.isRequired
 }
 
 /**

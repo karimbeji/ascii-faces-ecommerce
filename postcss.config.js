@@ -1,3 +1,7 @@
+/**
+ * PostCSS config to be used by postcss-loader on webpack
+ */
+
 function buildConfig (args) {
   let env = 'dev'
   if (args.env === 'production') {

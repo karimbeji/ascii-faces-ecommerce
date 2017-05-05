@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 /**
  * Ad component that renders a single ad.
- * @param  {Object}       props.adUrl Ad url to load
+ * @param  {String}       props.adUrl Ad url to load
  * @return {ReactElement}             The markup to render
  */
 const Ad = ({ adUrl }) => (
@@ -22,12 +22,16 @@ const Ad = ({ adUrl }) => (
           </div>
         </div>
         <div className='mdl-layout-spacer' />
-        <div className={
-          'mdl-button mdl-js-button mdl-button--fab ' +
-          'mdl-js-ripple-effect mdl-button--colored'
-        }>
+        <a
+          className={
+            'mdl-button mdl-js-button mdl-button--fab ' +
+            'mdl-js-ripple-effect mdl-button--colored'
+          }
+          href='https://unsplash.it'
+          target='_blank'
+        >
           <i className='material-icons'>star_border</i>
-        </div>
+        </a>
       </div>
     </div>
   </div>

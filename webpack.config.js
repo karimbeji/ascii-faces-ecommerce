@@ -1,3 +1,7 @@
+/**
+ * webpack config
+ */
+
 function buildConfig (env) {
   return require('./config/webpack.' + env + '.js')
 }

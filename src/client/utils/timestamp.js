@@ -17,7 +17,7 @@ const getDuration = seconds => {
      * calculate how many epochs (day, hour or minute)
      * the given seconds have
      */
-    let interval = Math.floor(seconds / epochs[epoch])
+    const interval = Math.floor(seconds / epochs[epoch])
     if (interval > 0) {
       // return the interval and current epoch
       return {
@@ -35,13 +35,13 @@ const getDuration = seconds => {
  */
 export const fromNow = date => {
   // get the difference in seconds between now and given date
-  let seconds = Math.floor((new Date() - new Date(date)) / 1000)
+  const seconds = Math.floor((new Date() - new Date(date)) / 1000)
 
   // get the interval and epoch from duration
-  let { interval, epoch } = getDuration(seconds)
+  const { interval, epoch } = getDuration(seconds)
 
   // handle the pluralization
-  let suffix = interval === 1 ? '' : 's'
+  const suffix = interval === 1 ? '' : 's'
 
   // return the date if interval is more than 7 days (1 week)
   if (interval > 7 && epoch === 'day') {

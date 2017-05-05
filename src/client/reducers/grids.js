@@ -1,31 +1,18 @@
-import * as gridsConstants from '../constants/grids'
+import * as entitiesConstants from '../constants/entities'
 import { initObj, isValueInObj } from '../utils/object'
 import {
   ADD_ENTITY, REQUEST_ENTITIES,
   RECEIVE_ENTITIES, END_OF_ENTITIES,
-  MOVE_PRE_FETCHED
+  MOVE_PRE_FETCHED, CHANGE_SORT, RESET_GRID
 } from '../actions'
-import { SORT_TYPE_ID } from '../constants'
-
-/**
- * Checks whether is a valid grid.
- * @param  {String}  grid Grid to be checked
- * @return {Boolean}      If is a valid grid
- */
-export const isValidGrid = grid => isValueInObj(gridsConstants, grid)
-
-/**
- * Initialize the state of availables entities.
- * @return {Object} The new initial state.
- */
-export const initGrids = initial => initObj(gridsConstants, initial)
+import { SORT_TYPES } from '../constants'
 
 // initial state of availables grids
-const initialGrids = initGrids({
+const initialGrids = initObj(entitiesConstants, {
   isFetching: false,
   isEnd: false,
   lastPageLoaded: 0,
-  sort: SORT_TYPE_ID,
+  sort: SORT_TYPES.default[0].sort,
   items: [],
   preFetched: []
 })
@@ -43,14 +30,19 @@ const grids = (state = initialGrids, action) => {
     case RECEIVE_ENTITIES:
     case END_OF_ENTITIES:
     case MOVE_PRE_FETCHED:
-      // checks whether payload has a grid to update and whether is a valid grid
-      if (!action.hasOwnProperty('grid') || !isValidGrid(action.grid)) {
+    case CHANGE_SORT:
+    case RESET_GRID:
+      // get the grid name from action entity or action grid
+      const grid = action.entity || action.grid
+
+      // checks whether is a valid grid
+      if (!isValueInObj(entitiesConstants, grid)) {
         return state
       }
 
       // process grids without mutate the state
       return Object.assign({}, state, {
-        [action.grid]: processGrid(state[action.grid], action)
+        [grid]: processGrid(state[grid], grid, action)
       })
     default:
       return state
@@ -60,14 +52,15 @@ const grids = (state = initialGrids, action) => {
 /**
  * Reducer to change a specific grid state.
  * @param  {Object} state  Current state of grid
+ * @param  {String} grid   Grid name
  * @param  {Object} action Action payload
  * @return {Object}        The new state
  */
-const processGrid = (state, action) => {
+const processGrid = (state, grid, action) => {
   switch (action.type) {
     case ADD_ENTITY:
       // checks whether item already exists
-      if (state.items.indexOf(action.item.id) !== -1) {
+      if (state.preFetched.indexOf(action.item.id) !== -1) {
         return state
       }
 
@@ -100,10 +93,17 @@ const processGrid = (state, action) => {
         items: [
           ...state.items,
           ...state.preFetched
-        ]
-      }, {
+        ],
         preFetched: []
       })
+    case CHANGE_SORT:
+      // change the sort without mutate the state
+      return Object.assign({}, state, {
+        sort: action.sort
+      })
+    case RESET_GRID:
+      // reset grid without mutate the state
+      return Object.assign({}, state, initialGrids[grid])
     default:
       return state
   }

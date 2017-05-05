@@ -1,0 +1,78 @@
+.mdl-layout__drawer {
+  width: 340px;
+  transform: translateX(350px);
+  right: 0;
+  left: auto;
+
+  .mdl-layout-title {
+    padding-left: 16px;
+    display: flex;
+    align-items: center;
+
+    .material-icons {
+      padding-right: 8px;
+    }
+  }
+
+  .mdl-list {
+    margin-top: 0px;
+
+    .mdl-list__item {
+      &.entity {
+        color: rgba(0,0,0,.54);
+        text-transform: uppercase;
+        font-size: 12px;
+        padding: 8px 16px;
+        min-height: 0;
+      }
+
+      &.no-item {
+        color: rgba(0,0,0,.54);
+        text-transform: uppercase;
+        font-size: 12px;
+      }
+
+      &.total {
+        .mdl-list__item-primary-content {
+          text-transform: uppercase;
+          font-size: 20px;
+        }
+
+        .mdl-list__item-secondary-content {
+          .mdl-list__item-secondary-action {
+            font-size: 20px;
+          }
+        }
+      }
+
+      .mdl-list__item-primary-content {
+        .mdl-list__item-icon {
+          margin: 2px 8px 0 0;
+          height: 32px;
+        }
+      }
+
+      .mdl-list__item-sub-title {
+        font-size: 12px;
+      }
+
+      .mdl-list__item-secondary-content {
+        .mdl-list__item-secondary-info {
+          margin-bottom: 10px;
+          text-transform: uppercase;
+          font-size: 10px;
+        }
+
+        .mdl-list__item-secondary-action {
+          color: rgb(255,64,129);
+          font-weight: 500;
+        }
+      }
+    }
+  }
+}
+
+.mdl-layout__drawer.is-visible ~ .mdl-layout__content.mdl-layout__content {
+  overflow-y: auto;
+  overflow-x: hidden;
+}

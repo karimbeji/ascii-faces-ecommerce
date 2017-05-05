@@ -1,3 +1,7 @@
+/**
+ * webpack config for development env
+ */
+
 const LiveReloadPlugin = require('webpack-livereload-plugin')
 const path = require('path')
 const cssLoaders = require('./css-loaders')

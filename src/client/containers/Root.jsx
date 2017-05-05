@@ -6,7 +6,10 @@ import App from './App'
 // configure Redux store
 const store = configureStore()
 
-// create container element using Redux Provider to handle the store
+/**
+ * The container element that uses Redux Provider to handle the store.
+ * @return {ReactElement} The markup to render.
+ */
 const Root = () => (
   <Provider store={store}>
     <App />

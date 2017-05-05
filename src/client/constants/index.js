@@ -1,6 +1,5 @@
 export * from './entities'
-export * from './grids'
-export * from './products-sort'
+export * from './sort-types'
 
 // base API URL
 export const API_URL = '/api'
@@ -13,6 +12,3 @@ export const FETCH_SCROLL_THRESHOLD = 200
 
 // base ADS URL
 export const ADS_URL = '/ads/?r='
-
-// standard sort type for all entities
-export const SORT_TYPE_ID = 'id'

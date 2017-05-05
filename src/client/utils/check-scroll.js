@@ -1,12 +1,13 @@
 /**
- * Checks whether scroll reachs the threshold.
- * @param  {Number}  threshold Limit that has to reach
- * @return {Boolean}           If scroll has reached the threshold
+ * Checks whether scroll reachs the threshold on given element.
+ * @param  {Number}      threshold Limit that has to reach
+ * @param  {HTMLElement} element   Element to check the scroll
+ * @return {Boolean}               If scroll has reached the threshold
  */
-const checkScroll = threshold => {
+const checkScroll = (threshold, element) => {
   // cache elements
   const doc = window.document
-  const docElement = doc.documentElement
+  const docElement = element || doc.documentElement
 
   // get the visible height of the document
   const visibleHeight = (docElement && docElement.offsetHeight) || 0
@@ -17,10 +18,8 @@ const checkScroll = threshold => {
   // get the vertical scroll position
   const scrollTop = (docElement && docElement.scrollTop) || doc.body.scrollTop
 
-  /**
-   * checks if visible height plus scrolled pixels
-   * reachs the limit that is total height minus threshold
-   */
+  // checks if visible height plus scrolled pixels
+  // reachs the limit that is total height minus threshold
   if (scrollTop + visibleHeight >= scrollableHeight - threshold) {
     return true
   }
