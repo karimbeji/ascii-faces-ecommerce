@@ -1,11 +1,15 @@
 import * as entitiesConstants from '../constants/entities'
 import { initObj, isValueInObj } from '../utils/object'
-import { CHANGE_GRID, ADD_TO_SHOPPING_CART, REMOVE_FROM_SHOPPING_CART } from '../actions'
+import {
+  CHANGE_GRID, ADD_TO_SHOPPING_CART,
+  REMOVE_FROM_SHOPPING_CART, LOAD_AD
+} from '../actions'
 
 // initial state of app
 const initialApp = {
   visibleGrid: '',
-  shoppingCart: initObj(entitiesConstants)
+  shoppingCart: initObj(entitiesConstants),
+  lastAd: 0
 }
 
 /**
@@ -37,6 +41,11 @@ const app = (state = initialApp, action) => {
       // process shopping cart without mutate the state
       return Object.assign({}, state, {
         shoppingCart: processShoppingCart(state.shoppingCart, action)
+      })
+    case LOAD_AD:
+      // change last ad without mutate the state
+      return Object.assign({}, state, {
+        lastAd: action.ad
       })
     default:
       return state

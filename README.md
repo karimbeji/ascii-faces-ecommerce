@@ -52,18 +52,6 @@ This is an ecommerce site, where you can buy all sorts of ascii faces like `(ノ
 - after every 20 products an advertisement is inserted from one of our sponsors. The same advertisement markup shown in the header of given `public/index.html` is used, but randomly generating the `?r` query param each time an ad is displayed.
 - ads is randomly selected, and a user must never see the same ad twice in a row.
 
-#### Ads "bug" identified
-
-By using the given rules that we should use the same markup shown in given `public/index.html` and `?r` query param should be randomly generated and also the user must never see the same ad twice in a row, **it is impossible** to the user not view the same ad in a row.
-
-This occurs because the given markup uses the code `Math.floor(Math.random() * 1000)` that generates a random number between `0` and `999`, but the `server/handle-ads.js` files uses the following code to process a `/ads` request:
-```js
-const r = getUrlSearchParam(req.url, 'r'),
-  max = 10,
-  n = (parseInt(r, 10) % max) + 1;
-```
-This code will change the randomly generated `?r` query param to a value between `1` and `10`. So the maximum number of possible different advertisemnts the app can have is **10**. However, the `server/index.js` file generates **500 products**, so how we need to insert an advertisement after every 20 products, we need at least **25 different advertisement** while we only have 10. So the user **will see** a same advertisement in a row, even before the first 200 products, since the app uses the given markup to save the loaded advertisement.
-
 #### Code Challenge original README.md
 
 See the original README.md below:

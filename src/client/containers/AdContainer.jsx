@@ -14,20 +14,22 @@ class AdContainer extends Component {
    * Handle event when component will mount
    */
   componentWillMount () {
-    // get ads and Redux dispatch from props
-    const { ads, dispatch } = this.props
+    // get lastAd and Redux dispatch from props
+    const { lastAd, dispatch } = this.props
+
+    // max ads provided by the server
+    const maxAds = 10
 
     // declare randomAd variable
     let randomAd
 
-    // try to get a random ad that isn't already loaded
+    // get a random ad that isn't equals to the last one
     do {
-      // even with this random the user **will see** a same advertisement in a row
-      // * more information on https://github.com/tembra/ascii-faces-ecommerce#ads-bug-identified
       randomAd = Math.floor(Math.random() * 1000)
-    } while (ads.loaded.indexOf(randomAd) !== -1)
+      randomAd = randomAd % maxAds
+    } while (lastAd === randomAd)
 
-    // tells the app that random ad will load
+    // tells the app that new ad will load
     dispatch(loadAd(randomAd))
 
     // save the ad url
@@ -55,11 +57,11 @@ AdContainer.propTypes = {
  * @return {Object}       The states mapped to props.
  */
 const mapStateToProps = state => {
-  // get ads from state
-  const { ads } = state
+  // get lastAd from state
+  const { lastAd } = state.app
 
   return {
-    ads
+    lastAd
   }
 }
 
